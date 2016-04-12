@@ -88,7 +88,7 @@
 		var ring = [];
 
 		for(var i = 0; i<peachNumber; i++){
-			var ring[i] = new THREE.Mesh(
+			ring[i] = new THREE.Mesh(
 				new THREE.TorusGeometry( 0.1, 0.04, 16, 50 ), //radius, tube rad, segments each
 				new THREE.MeshLambertMaterial( {map: ringTex, color: 0xffff44 } )
 				);

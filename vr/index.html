@@ -73,7 +73,7 @@
 		/*
 		Skybox
 		*/
-		var skyTexture = new THREE.ImageUtils.loadTexture( "images/zzzzzzz.gif" );
+		var skyTexture = new THREE.ImageUtils.loadTexture( "../images/zzzzzzz.gif" );
 		var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
 		var skyGeometry1 = new THREE.BoxGeometry(3, 3, 3);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
@@ -82,7 +82,7 @@
 
 		//Peachy cloud link
 		var peachy = new THREE.Object3D();
-		var peachyTex = new THREE.ImageUtils.loadTexture("images/tcpeach.gif");
+		var peachyTex = new THREE.ImageUtils.loadTexture("../images/tcpeach.gif");
 		var cloudPeachy = new THREE.Mesh(
 			new THREE.BoxGeometry(0.3, 0.3, 0.3),
 			new THREE.MeshLambertMaterial({map: peachyTex})
@@ -104,7 +104,7 @@
 
 		//slurpy flavors and store design link
 		var slurpy = new THREE.Object3D();
-		var slurpyTex = new THREE.ImageUtils.loadTexture("images/tcslurpy.gif");
+		var slurpyTex = new THREE.ImageUtils.loadTexture("../images/tcslurpy.gif");
 		var cloudSlurpy = new THREE.Mesh(
 			new THREE.BoxGeometry(0.3, 0.3, 0.3),
 			new THREE.MeshLambertMaterial({map: slurpyTex})
@@ -117,7 +117,7 @@
 
 		//things that make toto happy link
 		var happy = new THREE.Object3D();
-		var happyTex = new THREE.ImageUtils.loadTexture("images/tchappy.gif");
+		var happyTex = new THREE.ImageUtils.loadTexture("../images/tchappy.gif");
 		var cloudHappy = new THREE.Mesh(
 			new THREE.BoxGeometry(0.3, 0.3, 0.3),
 			new THREE.MeshLambertMaterial({map: happyTex})
@@ -130,7 +130,7 @@
 
 		//ask topaz advice column link
 		var topaz = new THREE.Object3D();
-		var topazTex = new THREE.ImageUtils.loadTexture("images/tctopaz.gif");
+		var topazTex = new THREE.ImageUtils.loadTexture("../images/tctopaz.gif");
 		var cloudTopaz = new THREE.Mesh(
 			new THREE.BoxGeometry(0.3, 0.3, 0.3),
 			new THREE.MeshLambertMaterial({map: topazTex})
