@@ -57,14 +57,17 @@ THREE.VRControls = function ( camera, speed, done ) {
 		function scangamepads() {
 			var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);
 			for (var i = 0; i < gamepads.length; i++) {
-				if (gamepads[i]) {
-					if (gamepads[i].index in self.controllers) {
-						self.controllers[gamepads[i].index] = gamepads[i];
+				var gamepad = gamepads[i];
+
+				// only take gamepads with pose for this demo
+				if (gamepad && gamepad.pose) {
+					if (gamepad.index in self.controllers) {
+						self.controllers[gamepad.index] = gamepad;
 					} else {
-						addgamepad(gamepads[i]);
+						addgamepad(gamepad);
 					}
-				}
-			}
+		    }
+	    }
 		}
 
 		window.addEventListener("gamepadconnected", connecthandler);
@@ -133,26 +136,7 @@ THREE.VRControls = function ( camera, speed, done ) {
 	this.manualMoveRate = new Float32Array([0, 0, 0]);
 	this.updateTime = 0;
 
-	this.isGamepad = true;
-	this.isArrows = true;
-	this.isWASD = true;
-
-	// the Rift SDK returns the position in meters
-	// this scale factor allows the user to define how meters
-	// are converted to scene units.
 	this.scale = 1;
-
-	this.enableGamepad = function(isGamepad) {
-		this.isGamepad = isGamepad;
-	}
-
-	this.enableArrows = function(isArrows) {
-		this.isArrows = isArrows;
-	}
-
-	this.enableWASD = function(isWASD) {
-		this.isWASD = isWASD;
-	}
 
 	this.update = function() {
 		var camera = this._camera;
@@ -163,40 +147,19 @@ THREE.VRControls = function ( camera, speed, done ) {
 		var newTime = Date.now();
 		this.updateTime = newTime;
 
-		/*
-		Get controller button info
-		*/
-		// if (this.isGamepad) {
-			var j;
-
-			for (j in this.controllers) {
-				var controller = this.controllers[j];
-
-				this.manualMoveRate[1] = -1 * Math.round(controller.axes[0]);
-				this.manualMoveRate[0] = Math.round(controller.axes[1]);
-				this.manualRotateRate[1] = -1 * Math.round(controller.axes[3]);
-				this.manualRotateRate[0] = -1 * Math.round(controller.axes[4]);
-			}
-		// }
-
-		// if (this.isGamepad || this.isWASD) {
-		  var interval = (newTime - oldTime) * 0.001;
-		  var update = new THREE.Quaternion(this.manualRotateRate[0] * interval,
+		var interval = (newTime - oldTime) * 0.001;
+		var update = new THREE.Quaternion(this.manualRotateRate[0] * interval,
 		                               this.manualRotateRate[1] * interval,
 		                               this.manualRotateRate[2] * interval, 1.0);
-		  update.normalize();
-			manualRotation.multiplyQuaternions(manualRotation, update);
-		// }
+		update.normalize();
+		manualRotation.multiplyQuaternions(manualRotation, update);
 
-		// if (this.isGamepad || this.isArrows) {
-			var offset = new THREE.Vector3();
-			if (this.manualMoveRate[0] != 0 || this.manualMoveRate[1] != 0 || this.manualMoveRate[2] != 0){
-					offset = getFwdVector().multiplyScalar( interval * this.speed * this.manualMoveRate[0])
-							.add(getRightVector().multiplyScalar( interval * this.speed * this.manualMoveRate[1]))
-							.add(getUpVector().multiplyScalar( interval * this.speed * this.manualMoveRate[2]));
-			}
-
-		// }
+		var offset = new THREE.Vector3();
+		if (this.manualMoveRate[0] != 0 || this.manualMoveRate[1] != 0 || this.manualMoveRate[2] != 0){
+				offset = getFwdVector().multiplyScalar( interval * this.speed * this.manualMoveRate[0])
+						.add(getRightVector().multiplyScalar( interval * this.speed * this.manualMoveRate[1]))
+						.add(getUpVector().multiplyScalar( interval * this.speed * this.manualMoveRate[2]));
+		}
 
 		if ( camera ) {
 			if ( !vrState ) {
@@ -251,6 +214,11 @@ THREE.VRControls = function ( camera, speed, done ) {
 		return totalRotation;
 	};
 
+	this._defaultPosition = [0,1.5,-1];
+	this.setDefaultPosition = function(position) {
+		this._defaultPosition = position;
+	}
+
 	this.getVRState = function() {
 		var vrInput = this._vrInput;
 		var orientation;
@@ -270,7 +238,7 @@ THREE.VRControls = function ( camera, speed, done ) {
 		} else if (this.phoneVR.rotationQuat()) {
 			orientation = this.phoneVR.rotationQuat();
 			orientation = [orientation.x, orientation.y, orientation.z, orientation.w];
-			position = [0,1.5,-1];
+			position = this._defaultPosition;
 		} else {
 			return null;
 		}
