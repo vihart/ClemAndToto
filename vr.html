@@ -78,16 +78,16 @@
 		Skybox
 		*/
 		var skyTexture = new THREE.ImageUtils.loadTexture( "media/zzzzzzz.jpg" );
-		var skyMaterial = new THREE.MeshBasicMaterial( { map: skyTexture, side: THREE.DoubleSide } );
+		var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
 		var skyGeometry1 = new THREE.BoxGeometry(3, 3, 3);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
 		everything.add( skybox );
 
 		var peachy = new THREE.Object3D();
-		var peachyTex = new THREE.ImageUtils.loadTexture("media/tcpeach.jpg");
+		var peachyTex = new THREE.ImageUtils.loadTexture("images/tcpeach.gif");
 		var cloudPeachy = new THREE.Mesh(
 			new THREE.BoxGeometry(0.3, 0.3, 0.3),
-			new THREE.MeshBasicMaterial({map: peachyTex})
+			new THREE.MeshLambertMaterial({map: peachyTex})
 			);
 		peachy.add(cloudPeachy);
 
@@ -99,9 +99,15 @@
 		// ring.rotation.z = pi;
 		// peachy.add( ring );
 
-		peachy.position.set(-0.8,1.5,-2);
+		var geometry = new THREE.TorusGeometry( 10, 3, 16, 100 );
+		var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+		var torus = new THREE.Mesh( geometry, material );
+		scene.add( torus );
+
+		peachy.position.set(0,0,0);
 		everything.add(peachy);
 
+		everything.position.set(-0.7, 1, -1.7);
 		scene.add(everything);
 
 		//camera position default for nonVR browsers:
