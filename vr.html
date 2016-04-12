@@ -77,14 +77,14 @@
 		/*
 		Skybox
 		*/
-		var skyTexture = new THREE.ImageUtils.loadTexture( "images/zzzzzzz.gif" );
+		var skyTexture = new THREE.ImageUtils.loadTexture( "media/zzzzzzz.jpg" );
 		var skyMaterial = new THREE.MeshBasicMaterial( { map: skyTexture, side: THREE.DoubleSide } );
 		var skyGeometry1 = new THREE.BoxGeometry(3, 3, 3);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
 		everything.add( skybox );
 
 		var peachy = new THREE.Object3D();
-		var peachyTex = new THREE.ImageUtils.loadTexture("images/tcpeach.gif");
+		var peachyTex = new THREE.ImageUtils.loadTexture("media/tcpeach.jpg");
 		var cloudPeachy = new THREE.Mesh(
 			new THREE.BoxGeometry(0.3, 0.3, 0.3),
 			new THREE.MeshBasicMaterial({map: peachyTex})
