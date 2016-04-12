@@ -85,6 +85,7 @@
 		var ringTex = new THREE.ImageUtils.loadTexture("media/peachyTorus.jpg");
 
 		var peachNumber = 25;
+		interPeachDistance = 1/3;
 		var ring = [];
 
 		for(var i = 0; i<peachNumber; i++){
@@ -93,12 +94,15 @@
 				new THREE.MeshLambertMaterial( {map: ringTex, color: 0xffff44 } )
 				);
 		ring[i].scale.set(1,1,0.3);
-		ring[i].position.set((i%5)/3, 0.3, Math.floor(i/5)/3);
+		ring[i].position.set((i%5)*interPeachDistance, 0.3, Math.floor(i/5)*interPeachDistance);
 		peachy.add( ring[i] );
 
 		}
 
-		peachy.position.set(0,0.5,0);
+		peachy.position.set(
+			-interPeachDistance*Math.sqrt(peachNumber)/2,
+			0,
+			-interPeachDistance*Math.sqrt(peachNumber)/2);
 
 		everything.add(peachy);
 
@@ -117,7 +121,27 @@
 
 			t += 1;
 
-			ring[1].rotation.y = t/100;
+			//first row animation
+			for(i = 0; i < Math.sqrt(peachNumber); i++ ){
+				ring[i].scale.set(1,(Math.sin(t/100)/4)+3/4,1);
+			}
+			//second row animation
+			for(i = Math.sqrt(peachNumber); i < 2*Math.sqrt(peachNumber); i++ ){
+				ring[i].rotation.y = t/100;
+			}
+			//third row animation
+			for(i = 2*Math.sqrt(peachNumber); i < 3*Math.sqrt(peachNumber); i++ ){
+				ring[i].scale.set(1,(Math.sin(t/100)/4)+3/4,1);
+				ring[i].position.y = Math.sin(t/50)/2 + 1;
+			}
+			//fourth row
+			for(i = 3*Math.sqrt(peachNumber); i < 4*Math.sqrt(peachNumber); i++ ){
+				ring[i].rotation.z = t/100;
+			}
+			//fifth row
+			for(i = 3*Math.sqrt(peachNumber); i < 4*Math.sqrt(peachNumber); i++ ){
+				ring[i].position.y = Math.sin(t/20)/10;
+			}
 
 
 
