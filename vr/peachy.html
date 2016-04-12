@@ -123,7 +123,7 @@
 
 			//first row animation
 			for(i = 0; i < Math.sqrt(peachNumber); i++ ){
-				ring[i].scale.set(1,(Math.sin(t/100)/4)+3/4,1);
+				ring[i].scale.set(1,(Math.sin(t/20)/4)+3/4,1);
 			}
 			//second row animation
 			for(i = Math.sqrt(peachNumber); i < 2*Math.sqrt(peachNumber); i++ ){
@@ -131,15 +131,15 @@
 			}
 			//third row animation
 			for(i = 2*Math.sqrt(peachNumber); i < 3*Math.sqrt(peachNumber); i++ ){
-				ring[i].scale.set(1,(Math.sin(t/100)/4)+3/4,1);
-				ring[i].position.y = Math.sin(t/50)/2 + 1;
+				ring[i].scale.set(1,(Math.sin(t/20)/4)+3/4,0.3);
+				ring[i].position.y = Math.sin(t/40)/8;
 			}
 			//fourth row
 			for(i = 3*Math.sqrt(peachNumber); i < 4*Math.sqrt(peachNumber); i++ ){
 				ring[i].rotation.z = t/100;
 			}
 			//fifth row
-			for(i = 3*Math.sqrt(peachNumber); i < 4*Math.sqrt(peachNumber); i++ ){
+			for(i = 4*Math.sqrt(peachNumber); i < 5*Math.sqrt(peachNumber); i++ ){
 				ring[i].position.y = Math.sin(t/20)/10;
 			}
 
