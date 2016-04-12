@@ -63,21 +63,17 @@
 		/*
 		Light
 		*/
-		var light = new THREE.AmbientLight( 0x404040 );
+		var light = new THREE.AmbientLight( 0xcccccc );
 		everything.add( light );
 
-		var directionalLight = new THREE.DirectionalLight( 0x404040, 5 );
-		directionalLight.position.set( 0, 2, 0 );
-		everything.add( directionalLight );
-
-		var light2 = new THREE.PointLight( 0xffffff, 1, 100 );
+		var light2 = new THREE.PointLight( 0xffffff, 0.5, 100 );
 		light2.intensity = 1;
 		everything.add( light2 );
 
 		/*
 		Skybox
 		*/
-		var skyTexture = new THREE.ImageUtils.loadTexture( "media/zzzzzzz.jpg" );
+		var skyTexture = new THREE.ImageUtils.loadTexture( "images/zzzzzzz.gif" );
 		var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
 		var skyGeometry1 = new THREE.BoxGeometry(3, 3, 3);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
@@ -91,18 +87,13 @@
 			);
 		peachy.add(cloudPeachy);
 
-		// var ring = new THREE.Mesh(
-		// 	THREE.TorusGeometry( 10, 3, 16, 100 ),
-		// 	THREE.MeshBasicMaterial( { color: 0xffff44 } )
-		// 	);
-		// ring.position.set(0, 0.2, 0);
-		// ring.rotation.z = pi;
-		// peachy.add( ring );
-
-		var geometry = new THREE.TorusGeometry( 10, 3, 16, 100 );
-		var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-		var torus = new THREE.Mesh( geometry, material );
-		scene.add( torus );
+		var ring = new THREE.Mesh(
+			new THREE.TorusGeometry( 0.5, 0.1, 16, 50 ), //radius, tube rad, segments each
+			new THREE.MeshLambertMaterial( { color: 0xffff44 } )
+			);
+		ring.position.set(0, 0.2, 0);
+		ring.rotation.z = pi;
+		peachy.add( ring );
 
 		peachy.position.set(0,0,0);
 		everything.add(peachy);
@@ -121,7 +112,7 @@
 
 			t += 1;
 
-			// ring.rotation.x += t/100;
+			ring.rotation.x += t/100;
 
 
 
