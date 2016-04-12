@@ -79,6 +79,8 @@
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
 		everything.add( skybox );
 
+
+		//Peachy cloud link
 		var peachy = new THREE.Object3D();
 		var peachyTex = new THREE.ImageUtils.loadTexture("images/tcpeach.gif");
 		var cloudPeachy = new THREE.Mesh(
@@ -88,15 +90,53 @@
 		peachy.add(cloudPeachy);
 
 		var ring = new THREE.Mesh(
-			new THREE.TorusGeometry( 0.5, 0.1, 16, 50 ), //radius, tube rad, segments each
+			new THREE.TorusGeometry( 0.1, 0.03, 16, 50 ), //radius, tube rad, segments each
 			new THREE.MeshLambertMaterial( { color: 0xffff44 } )
 			);
-		ring.position.set(0, 0.2, 0);
-		ring.rotation.z = pi;
+		ring.position.set(0, 0.3, 0);
 		peachy.add( ring );
 
-		peachy.position.set(0,0,0);
+		peachy.position.set(0,0.5,0);
 		everything.add(peachy);
+
+		//slurpy flavors and store design link
+		var slurpy = new THREE.Object3D();
+		var slurpyTex = new THREE.ImageUtils.loadTexture("images/tcslurpy.gif");
+		var cloudSlurpy = new THREE.Mesh(
+			new THREE.BoxGeometry(0.3, 0.3, 0.3),
+			new THREE.MeshLambertMaterial({map: slurpyTex})
+			);
+		slurpy.add(cloudSlurpy);
+
+		slurpy.position.set(0.5,0,0);
+		everything.add(slurpy);
+
+
+		//things that make toto happy link
+		var happy = new THREE.Object3D();
+		var happyTex = new THREE.ImageUtils.loadTexture("images/tchappy.gif");
+		var cloudHappy = new THREE.Mesh(
+			new THREE.BoxGeometry(0.3, 0.3, 0.3),
+			new THREE.MeshLambertMaterial({map: happyTex})
+			);
+		happy.add(cloudHappy);
+
+		happy.position.set(-0.5,0.5,0);
+		everything.add(happy);
+
+
+		//ask topaz advice column link
+		var topaz = new THREE.Object3D();
+		var topazTex = new THREE.ImageUtils.loadTexture("images/tctopaz.gif");
+		var cloudTopaz = new THREE.Mesh(
+			new THREE.BoxGeometry(0.3, 0.3, 0.3),
+			new THREE.MeshLambertMaterial({map: topazTex})
+			);
+		topaz.add(cloudTopaz);
+
+		topaz.position.set(0,-0.5,0.5);
+		everything.add(topaz);
+
 
 		everything.position.set(-0.7, 1, -1.7);
 		scene.add(everything);
@@ -112,7 +152,7 @@
 
 			t += 1;
 
-			ring.rotation.x += t/100;
+			ring.rotation.y = t/100;
 
 
 
