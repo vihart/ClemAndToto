@@ -27,9 +27,9 @@ THREE.VRControls = function ( camera, speed, done ) {
 			}
 
 			control.active = (sign === 1);
-			if (self.isWASD && control.index <= 2){
+			if (control.index <= 2){
 				self.manualRotateRate[control.index] += sign * control.sign;
-			} else if (self.isArrows && control.index <= 5) {
+			} else if (control.index <= 5) {
 				self.manualMoveRate[control.index - 3] += sign * control.sign;
 			}
 		}
