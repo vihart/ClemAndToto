@@ -75,7 +75,7 @@
 		*/
 		var skyTexture = new THREE.ImageUtils.loadTexture( "../images/zzzzzzz.gif" );
 		var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
-		var skyGeometry1 = new THREE.BoxGeometry(3, 3, 3);
+		var skyGeometry1 = new THREE.BoxGeometry(6, 6, 6);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
 		everything.add( skybox );
 		var bound = 1;
@@ -85,7 +85,7 @@
 		var peachy = new THREE.Object3D();
 		var ringTex = new THREE.ImageUtils.loadTexture("media/peachyTorus.jpg");
 
-		var peachNumber = 30;
+		var peachNumber = 60;
 		var ring = [];
 		var spin = [];
 		var velocity = [];
