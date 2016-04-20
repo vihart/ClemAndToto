@@ -78,6 +78,7 @@
 		var skyGeometry1 = new THREE.BoxGeometry(3, 3, 3);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
 		everything.add( skybox );
+		var bound = 1;
 
 
 		//Peachy array
@@ -151,13 +152,13 @@
 				ring[i].position.z += velocity[i].z;
 
 				//bounce if on boundary:
-				if(Math.abs(ring[i].position.x) > 1){
+				if(Math.abs(ring[i].position.x) > bound){
 					velocity[i].x *= -1;
 				}
-				if(Math.abs(ring[i].position.y) > 1){
+				if(Math.abs(ring[i].position.y) > bound){
 					velocity[i].y *= -1;
 				}
-				if(Math.abs(ring[i].position.z) > 1){
+				if(Math.abs(ring[i].position.z) > bound){
 					velocity[i].z *= -1;
 				}
 			}
