@@ -151,11 +151,13 @@
 				ring[i].position.z = (velocity[i].z * t)/500;
 
 				//bounce if on boundary:
-				if(Math.abs(ring[i].position.x) > 1.5 || 
-					Math.abs(ring[i].position.y) > 1.5 || 
-					Math.abs(ring[i].position.z) > 1.5 ){
+				if(Math.abs(ring[i].position.x) > 1.5){
 					velocity[i].x = velocity[i].x * (-1);
+				}
+				if(Math.abs(ring[i].position.y) > 1.5){
 					velocity[i].y = velocity[i].y * (-1);
+				}
+				if(Math.abs(ring[i].position.z) > 1.5){
 					velocity[i].z = velocity[i].z * (-1);
 				}
 			}
