@@ -146,9 +146,9 @@
 				ring[i].rotation.z = (spin[i].z * t)/100;
 
 				//update position:
-				ring[i].position.x += (velocity[i].x * t)/100;
-				ring[i].position.y += (velocity[i].y * t)/100;
-				ring[i].position.z += (velocity[i].z * t)/100;
+				ring[i].position.x = (velocity[i].x * t)/1000;
+				ring[i].position.y = (velocity[i].y * t)/1000;
+				ring[i].position.z = (velocity[i].z * t)/1000;
 
 				//bounce if on boundary:
 				if(Math.abs(ring[i].position.x) > 2 || 
