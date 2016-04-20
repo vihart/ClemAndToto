@@ -78,21 +78,21 @@
 		var skyGeometry1 = new THREE.BoxGeometry(6, 6, 6);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
 		everything.add( skybox );
-		var bound = 1;
+		var bound = 1.3;
 
 
 		//Peachy array
 		var peachy = new THREE.Object3D();
 		var ringTex = new THREE.ImageUtils.loadTexture("media/peachyTorus.jpg");
 
-		var peachNumber = 60;
+		var peachNumber = 120;
 		var ring = [];
 		var spin = [];
 		var velocity = [];
 
 		for(var i = 0; i<peachNumber; i++){
 			ring[i] = new THREE.Mesh(
-				new THREE.TorusGeometry( 0.1, 0.04, 16, 50 ), //radius, tube rad, segments each
+				new THREE.TorusGeometry( 0.1, 0.04, 14, 40 ), //radius, tube rad, segments each
 				new THREE.MeshLambertMaterial( {map: ringTex, color: 0xffff44 } )
 				);
 		ring[i].scale.set(1,1,0.3);
