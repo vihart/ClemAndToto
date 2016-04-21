@@ -136,6 +136,11 @@
 		var hands = {};
 		var vrModeGamePadButtonPressed = false; // because of annoying way gamepad buttons work
 		var pressedController = -1;
+
+
+    	var triggeredController = -1;
+    	var triggerPressed = false;
+
 		/*
 		Request animation frame loop function
 		*/
@@ -200,8 +205,10 @@
 				}
 
 		        if (handControl.pose && handControl.buttons[2].pressed) { //draw stuff
-
-					ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//position new blob
+		        	triggeredController = j;
+		        	triggerPressed = true;
+		        } else if(triggerPressed && triggeredController == j){
+					ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//position new peachy ring
 					p++;
 		        }
 
