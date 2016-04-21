@@ -200,7 +200,8 @@
 					velocity[i].z *= friction;
 
 				}else{ //if it's at or below floor height
-					velocity[i].y = Math.abs(velocity[i].y);
+					// velocity[i].y = Math.abs(velocity[i].y);
+					velocity[i].y *= -1;
 				}
 			}
 
