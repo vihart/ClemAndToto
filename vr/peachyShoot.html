@@ -73,12 +73,35 @@
 		/*
 		Skybox
 		*/
-		var skyTexture = new THREE.ImageUtils.loadTexture( "../images/zzzzzzz.gif" );
-		var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
-		var skyGeometry1 = new THREE.BoxGeometry(10, 10, 10);
+		// var skyTexture = new THREE.ImageUtils.loadTexture( "../images/zzzzzzz.gif" );
+		// var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
+		// var skyGeometry1 = new THREE.BoxGeometry(10, 10, 10);
+		// var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
+		// everything.add( skybox );
+		// var bound = 1.3;
+
+
+		/*
+		Skybox
+		*/
+		var skyTexture = new THREE.ImageUtils.loadTexture( "media/sky.jpg" );
+		var skyMaterial = new THREE.MeshBasicMaterial( { map: skyTexture, side: THREE.DoubleSide } );
+		var skyGeometry1 = new THREE.SphereGeometry(55, 30, 30);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
-		everything.add( skybox );
-		var bound = 1.3;
+		scene.add( skybox );
+
+		/*
+		Floor
+		*/
+		var floorImage = new THREE.ImageUtils.loadTexture( "media/floor.jpg" );
+		floorImage.wrapS = floorImage.wrapT = THREE.RepeatWrapping;
+		floorImage.repeat.set( 20, 20 );
+		var floorGeometry = new THREE.PlaneBufferGeometry( 50, 50, 10 );
+		var floorMaterial = new THREE.MeshBasicMaterial( {map: floorImage, color: 0x0475a1, side: THREE.DoubleSide} );
+		var floor = new THREE.Mesh( floorGeometry, floorMaterial );
+		floor.rotation.x = 90 * Math.PI/180;
+		floor.position.set(0,-1.5,0);
+		scene.add( floor );
 
 
 		//Peachy array
@@ -141,9 +164,9 @@
     	var triggeredController = -1;
     	var triggerPressed = false;
 
-    	var shootScale = 0.05; //for scaling shooting vector
-    	var gravity = 0.01;
-    	var friction = 0.99; //air friction, 1 for none, 0 for infinite
+    	var shootScale = 0.1; //for scaling shooting vector
+    	var gravity = 0.001;
+    	var friction = 0.999; //air friction, 1 for none, 0 for infinite
 
 		/*
 		Request animation frame loop function
