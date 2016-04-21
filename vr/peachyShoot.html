@@ -105,9 +105,10 @@
 
 		var cakeTex = new THREE.ImageUtils.loadTexture( "media/cake.jpg");
 		var cake = new THREE.Mesh(
-			new THREE.BoxGeometry(1,1,1),
+			new THREE.CylinderGeometry(0.5,0.5,0.5,15,2),
 			new THREE.MeshLambertMaterial({map: cakeTex})
 			);
+		cake.position.set(2,floor.position.y + 0.25, 2);
 		scene.add(cake);
 
 		//Peachy array
@@ -176,6 +177,7 @@
     	var floorDampening = 0.9; //less velocity when it hits the floor
 
     	var collisionFloor = floor.position.y + 0.2;
+    	var cakeRadius = 1;
 		/*
 		Request animation frame loop function
 		*/
@@ -189,9 +191,9 @@
 
 			//peachy ring position updates!
 			for(i = 0; i < peachNumber; i++ ){
-
-				//only if it's above the floor
-				if(ring[i].position.y > collisionFloor){
+				if(ring[i].position.distanceTo(cake.position) < cakeRadius){
+					//you hit the cake!!!!!!!!!
+				}else if(ring[i].position.y > collisionFloor){
 					//update spin:
 					ring[i].rotation.x = (spin[i].x * t);
 					ring[i].rotation.y = (spin[i].y * t);
