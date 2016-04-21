@@ -193,6 +193,9 @@
 			for(i = 0; i < peachNumber; i++ ){
 				if(ring[i].position.distanceTo(cake.position) < cakeRadius){
 					//you hit the cake!!!!!!!!!
+					velocity[i].x = 0;
+					velocity[i].y = 0;
+					velocity[i].z = 0;
 				}else if(ring[i].position.y > collisionFloor){
 					//update spin:
 					ring[i].rotation.x = (spin[i].x * t);
