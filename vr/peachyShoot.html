@@ -132,8 +132,10 @@
 		controls.setDefaultPosition([0,0.5,0]);
 
 
-		
+
 		var hands = {};
+		var vrModeGamePadButtonPressed = false; // because of annoying way gamepad buttons work
+		var pressedController = -1;
 		/*
 		Request animation frame loop function
 		*/
