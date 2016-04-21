@@ -189,10 +189,6 @@
 					ring[i].rotation.y = (spin[i].y * t);
 					ring[i].rotation.z = (spin[i].z * t);
 
-					//update position:
-					ring[i].position.x += velocity[i].x;
-					ring[i].position.y += velocity[i].y;
-					ring[i].position.z += velocity[i].z;
 
 					//update velocity:
 					velocity[i].x *= friction;
@@ -200,9 +196,12 @@
 					velocity[i].z *= friction;
 
 				}else{ //if it's at or below floor height
-					// velocity[i].y = Math.abs(velocity[i].y);
-					velocity[i].y *= -1;
+					velocity[i].y = Math.abs(velocity[i].y);
 				}
+					//update position:
+				ring[i].position.x += velocity[i].x;
+				ring[i].position.y += velocity[i].y;
+				ring[i].position.z += velocity[i].z;
 			}
 
 
