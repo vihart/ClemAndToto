@@ -183,7 +183,7 @@
 				if (!hands[j]) {
 					//create a new hands[j] for each controller
 					hands[j] = new THREE.Mesh(new THREE.OctahedronGeometry(.05), new THREE.MeshBasicMaterial({color: 0xEE0443, wireframe: true}));
-					scene.add(hands[j]);
+					// scene.add(hands[j]);
 				}
 				if(handControl.pose){
 					hands[j].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);
