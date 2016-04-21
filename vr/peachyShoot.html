@@ -177,7 +177,7 @@
     	var floorDampening = 0.9; //less velocity when it hits the floor
 
     	var collisionFloor = floor.position.y + 0.2;
-    	var cakeRadius = 1;
+    	var cakeRadius = 0.55;
 		/*
 		Request animation frame loop function
 		*/
@@ -197,10 +197,12 @@
 					velocity[i].y = 0;
 					velocity[i].z = 0;
 				}else if(ring[i].position.y > collisionFloor){
+					if(velocity[i].y < 0.001){
 					//update spin:
 					ring[i].rotation.x = (spin[i].x * t);
 					ring[i].rotation.y = (spin[i].y * t);
 					ring[i].rotation.z = (spin[i].z * t);
+					}
 
 
 					//update velocity:
