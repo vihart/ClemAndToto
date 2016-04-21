@@ -193,6 +193,7 @@
 					//update velocity:
 					velocity[i].x *= friction;
 					velocity[i].y -= gravity;
+					velocity[i].y *= friction;
 					velocity[i].z *= friction;
 
 				}else{ //if it's at or below floor height
