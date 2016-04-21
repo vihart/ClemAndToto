@@ -93,7 +93,7 @@
 		/*
 		Floor
 		*/
-		var floorImage = new THREE.ImageUtils.loadTexture( "media/floor.jpg" );
+		var floorImage = new THREE.ImageUtils.loadTexture( "media/floor2.png" );
 		floorImage.wrapS = floorImage.wrapT = THREE.RepeatWrapping;
 		floorImage.repeat.set( 20, 20 );
 		var floorGeometry = new THREE.PlaneBufferGeometry( 50, 50, 10 );
@@ -103,6 +103,12 @@
 		floor.position.set(0,-1.5,0);
 		scene.add( floor );
 
+		var cakeTex = new THREE.ImageUtils.loadTexture( "media/cake.png");
+		var cake = new THREE.Mesh(
+			new THREE.BoxGeometry(),
+			new THREE.MeshLambertMaterial({map: cakeTex})
+			);
+		scene.add(cake);
 
 		//Peachy array
 		var peachy = new THREE.Object3D();
@@ -167,7 +173,9 @@
     	var shootScale = 0.1; //for scaling shooting vector
     	var gravity = 0.001;
     	var friction = 0.999; //air friction, 1 for none, 0 for infinite
+    	var floorDampening = 0.9; //less velocity when it hits the floor
 
+    	var collisionFloor = floor.position.y + 0.2;
 		/*
 		Request animation frame loop function
 		*/
@@ -183,7 +191,7 @@
 			for(i = 0; i < peachNumber; i++ ){
 
 				//only if it's above the floor
-				if(ring[i].position.y > floor.position.y){
+				if(ring[i].position.y > collisionFloor){
 					//update spin:
 					ring[i].rotation.x = (spin[i].x * t);
 					ring[i].rotation.y = (spin[i].y * t);
@@ -198,6 +206,7 @@
 
 				}else{ //if it's at or below floor height
 					velocity[i].y = Math.abs(velocity[i].y);
+					velocity[i].y *= floorDampening;
 				}
 					//update position:
 				ring[i].position.x += velocity[i].x;
