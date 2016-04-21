@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>Clem and Toto VR 2000</title>
+		<!--
+		Attribution
+		eleVR webvr boilerplate: https://github.com/hawksley
+		webvr version of ClemAndToto website from 2000
+		-->
+	</head>
+
+	<body>
+	</body>
+
+
+	<script src="js/three.min.js"></script>
+	<script src="js/VRControls.js"></script>
+	<script src="js/VREffect.js"></script>
+	<script src="lib/gl-matrix.js"></script>
+	<script src="js/VRCursor.js"></script>
+	<script src="loaders/OBJloader.js"></script>
+	<script src="loaders/MTLLoader.js"></script>
+	<script src="loaders/OBJMTLLoader.js"></script>
+	<!-- // <script src="lib/tween.js"></script> -->
+	<script src="js/PhoneVR.js"></script>
+
+	<script>
+
+		var c = 1; //scale factor
+		var pi = 3.1415926535897932384626433832795;
+		/*
+		Setup three.js WebGL renderer
+		*/
+		var renderer = new THREE.WebGLRenderer( { antialias: true } );
+		/*
+		Append the canvas element created by the renderer to document body element.
+		*/
+		document.body.appendChild( renderer.domElement );
+		/*
+		Create a three.js scene
+		*/
+		var scene = new THREE.Scene();
+		/*
+		Create a three.js camera
+		*/
+		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.001, 10000 );
+
+		/*
+		Apply VR headset positional data to camera.
+		*/
+		var controls = new THREE.VRControls( camera, undefined, 4 );
+
+		/*
+		Apply VR stereo rendering to renderer
+		*/
+		var effect = new THREE.VREffect( renderer );
+		effect.setSize( window.innerWidth, window.innerHeight );
+
+		//Object all objects and lights are in
+		var everything = new THREE.Object3D();
+
+		/*
+		Light
+		*/
+		var light = new THREE.AmbientLight( 0xcccccc );
+		everything.add( light );
+
+		var light2 = new THREE.PointLight( 0xffffff, 0.5, 100 );
+		light2.intensity = 1;
+		everything.add( light2 );
+
+		/*
+		Skybox
+		*/
+		var skyTexture = new THREE.ImageUtils.loadTexture( "../images/zzzzzzz.gif" );
+		var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
+		var skyGeometry1 = new THREE.BoxGeometry(6, 6, 6);
+		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
+		everything.add( skybox );
+		var bound = 1.3;
+
+
+		//Peachy array
+		var peachy = new THREE.Object3D();
+		var ringTex = new THREE.ImageUtils.loadTexture("media/peachyTorus.jpg");
+
+		var peachNumber = 120;
+		var ring = [];
+		var spin = [];
+		var velocity = [];
+
+		for(var i = 0; i<peachNumber; i++){
+			ring[i] = new THREE.Mesh(
+				new THREE.TorusGeometry( 0.1, 0.04, 14, 40 ), //radius, tube rad, segments each
+				new THREE.MeshLambertMaterial( {map: ringTex, color: 0xffff44 } )
+				);
+		ring[i].scale.set(1,1,0.3);
+
+		ring[i].position.set(
+			Math.random()*3 - 1.5,
+			Math.random()*3 - 1.5,
+			Math.random()*3 - 1.5
+			);
+
+		spin[i] = new THREE.Vector3(
+			Math.random()/100,
+			Math.random()/100,
+			Math.random()/100
+			);
+
+		velocity[i] = new THREE.Vector3(
+			(Math.random() - 0.5)/500,
+			(Math.random() - 0.5)/500,
+			(Math.random() - 0.5)/500
+			);
+
+
+		peachy.add( ring[i] );
+
+		}
+
+		everything.add(peachy);
+
+
+		everything.position.set(0,0,0);
+		scene.add(everything);
+
+		//camera position default for nonVR browsers:
+		camera.position.set(0, 0.5, 1);
+
+		controls.setDefaultPosition([0,0.5,0]);
+
+
+
+		/*
+		Request animation frame loop function
+		*/
+		var t = 1; //time
+		var p = 0; //which peachy ring we're on
+
+		function animate() {
+
+			t += 1;
+
+			//first row animation
+			for(i = 0; i < peachNumber; i++ ){
+				//update spin:
+				ring[i].rotation.x = (spin[i].x * t);
+				ring[i].rotation.y = (spin[i].y * t);
+				ring[i].rotation.z = (spin[i].z * t);
+
+				//update position:
+				ring[i].position.x += velocity[i].x;
+				ring[i].position.y += velocity[i].y;
+				ring[i].position.z += velocity[i].z;
+
+				//bounce if on boundary:
+				if(Math.abs(ring[i].position.x) > bound){
+					velocity[i].x *= -1;
+				}
+				if(Math.abs(ring[i].position.y) > bound){
+					velocity[i].y *= -1;
+				}
+				if(Math.abs(ring[i].position.z) > bound){
+					velocity[i].z *= -1;
+				}
+			}
+
+
+			// HANDS!!!!
+			for (j in controls.controllers) {
+				if(debug) {
+					console.time("controls");
+				}
+
+
+				var handControl = controls.controllers[j]
+				if (!hands[j]) {
+					//create a new hands[j] for each controller
+					hands[j] = new THREE.Mesh(new THREE.OctahedronGeometry(.05), new THREE.MeshBasicMaterial({color: 0xEE0443, wireframe: true}));
+					scene.add(hands[j]);
+				}
+				if(handControl.pose){
+					hands[j].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);
+				}
+				
+				if (handControl.pose && handControl.buttons[4].pressed) { // enter VR mode
+					pressedController = j;
+					vrModeGamePadButtonPressed = true;
+				} else if (vrModeGamePadButtonPressed && pressedController === j) {
+					vrModeGamePadButtonPressed = false;
+					pressedController = -1;
+					vrMode = !vrMode;
+					effect.setVRMode(vrMode);
+				}
+
+		        if (handControl.pose && handControl.buttons[2].pressed) { //draw stuff
+
+					ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//position new blob
+					p++;
+		        }
+
+				if(debug) {
+					console.timeEnd("controls");
+					console.log(handControl.pose.position);
+				}
+			}
+
+
+
+			/*
+			Update VR headset position and apply to camera.
+			*/
+			controls.update();
+
+
+			/*
+			Render the scene through the VREffect.
+			*/
+			// scene.simulate();
+			effect.render( scene, camera );
+			requestAnimationFrame( animate );
+
+		}
+
+		/*
+		Kick off animation loop
+		*/
+		animate();
+
+
+
+		/*
+		Listen for double click event to enter full-screen VR mode
+		*/
+		document.body.addEventListener( 'dblclick', function() {
+			effect.setFullScreen( true );
+		});
+
+		/*
+		Listen for keyboard event and zero positional sensor on appropriate keypress.
+		*/
+		var vrMode = false;
+		function onkey(event) {
+	    event.preventDefault();
+             if (event.keyCode == 90) { // z
+	    	controls.zeroSensor(); //zero rotation
+	    } else if (event.keyCode == 70) { //f
+	    	effect.setFullScreen(true) //fullscreen
+	  	} else if (event.keyCode == 86 || event.keyCode == 13 || event.keyCode == 32 ) { // v or 'enter' or 'space' for VR mode
+		    vrMode = !vrMode;
+		    effect.setVRMode(vrMode);
+			}
+
+	  };
+
+	  window.addEventListener("keydown", onkey, true);
+
+
+		/*
+		Handle window resizes
+		*/
+		function onWindowResize() {
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			effect.setSize( window.innerWidth, window.innerHeight );
+		}
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		document.body.addEventListener( 'click', doClickStuff);
+
+		function doClickStuff(event) {
+		  effect.setFullScreen(true);
+
+		  if (typeof window.screen.orientation !== 'undefined' && typeof window.screen.orientation.lock === 'function') {
+		    window.screen.orientation.lock('landscape-primary');
+		  }
+
+		  if (typeof window.screen.webkitLockOrientation !== 'undefined' && typeof window.screen.webkitLockOrientation.lock === 'function') {
+		    window.screen.webkitLockOrientation('landscape-primary');
+		  }
+
+		  window.screen.webkitLockOrientation('landscape-primary');
+		  window.screen.lockOrientation('landscape-primary');
+		}
+
+	</script>
+</html>
