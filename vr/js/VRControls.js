@@ -73,7 +73,7 @@ THREE.VRControls = function ( camera, speed, done ) {
 		window.addEventListener("gamepadconnected", connecthandler);
 		window.addEventListener("gamepaddisconnected", disconnecthandler);
 		if (!self.haveEvents) {
-			setInterval(scangamepads, 500);
+			setInterval(scangamepads, 20);
 		}
 
 		if (!navigator.getVRDisplays && !navigator.mozGetVRDevices && !navigator.getVRDevices) {
