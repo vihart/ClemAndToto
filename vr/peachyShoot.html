@@ -97,7 +97,7 @@
 		floorImage.wrapS = floorImage.wrapT = THREE.RepeatWrapping;
 		floorImage.repeat.set( 20, 20 );
 		var floorGeometry = new THREE.PlaneBufferGeometry( 50, 50, 10 );
-		var floorMaterial = new THREE.MeshBasicMaterial( {map: floorImage, color: 0x0475a1, side: THREE.DoubleSide} );
+		var floorMaterial = new THREE.MeshPhongMaterial( {map: floorImage, color: 0x0475a1, side: THREE.DoubleSide} );
 		var floor = new THREE.Mesh( floorGeometry, floorMaterial );
 		floor.rotation.x = 90 * Math.PI/180;
 		floor.position.set(0,-1.5,0);
@@ -105,7 +105,7 @@
 
 		var cakeTex = new THREE.ImageUtils.loadTexture( "media/cake.jpg");
 		var cake = new THREE.Mesh(
-			new THREE.CylinderGeometry(0.5,0.5,0.5,15,2),
+			new THREE.CylinderGeometry(0.5,0.5,0.5,20,2),
 			new THREE.MeshLambertMaterial({map: cakeTex})
 			);
 		cake.position.set(2,floor.position.y + 0.25, 2);
