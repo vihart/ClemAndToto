@@ -141,6 +141,8 @@
     	var triggeredController = -1;
     	var triggerPressed = false;
 
+    	var shootScale = 0.01; //for scaling shooting vector
+
 		/*
 		Request animation frame loop function
 		*/
@@ -211,6 +213,12 @@
 		        	triggerPressed = false;
 		        	triggeredController = -1;
 					ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//position new peachy ring
+					//give new ring a new velocity
+					velocity[p%peachNumber] = new THREE.Vector3( //subtract headset pos from hand pos
+						(controls.controllers[j].pose.position[0] - camera.position.x)*shootScale, //x
+						(controls.controllers[j].pose.position[1] - camera.position.y)*shootScale, //y
+						(controls.controllers[j].pose.position[2] - camera.position.z)*shootScale //z
+						);
 					p++;
 		        }
 
