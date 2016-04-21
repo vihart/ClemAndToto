@@ -63,11 +63,11 @@
 		/*
 		Light
 		*/
-		var light = new THREE.AmbientLight( 0xcccccc );
+		var light = new THREE.AmbientLight( 0x888888 );
 		everything.add( light );
 
 		var light2 = new THREE.PointLight( 0xffffff, 0.5, 100 );
-		light2.intensity = 1;
+		light2.intensity = 0.8;
 		everything.add( light2 );
 
 		/*
@@ -112,10 +112,10 @@
 		scene.add(cake);
 
 		var cherry = new THREE.Mesh(
-			new THREE.IcosahedronGeometry(0.1),
+			new THREE.IcosahedronGeometry(0.1, 2),
 			new THREE.MeshPhongMaterial({color: 0xff0000})
 			);
-		cherry.position.set(cake.position.x, cake.position.y + 0.5, cake.position.z);
+		cherry.position.set(cake.position.x, cake.position.y + 0.3, cake.position.z);
 		scene.add(cherry);
 
 		//Peachy array
