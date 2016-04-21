@@ -75,7 +75,7 @@
 		*/
 		var skyTexture = new THREE.ImageUtils.loadTexture( "../images/zzzzzzz.gif" );
 		var skyMaterial = new THREE.MeshLambertMaterial( { map: skyTexture, side: THREE.DoubleSide } );
-		var skyGeometry1 = new THREE.BoxGeometry(6, 6, 6);
+		var skyGeometry1 = new THREE.BoxGeometry(10, 10, 10);
 		var skybox = new THREE.Mesh( skyGeometry1, skyMaterial );
 		everything.add( skybox );
 		var bound = 1.3;
@@ -141,7 +141,9 @@
     	var triggeredController = -1;
     	var triggerPressed = false;
 
-    	var shootScale = 0.01; //for scaling shooting vector
+    	var shootScale = 0.05; //for scaling shooting vector
+    	var gravity = 0.01;
+    	var friction = 0.99; //air friction, 1 for none, 0 for infinite
 
 		/*
 		Request animation frame loop function
@@ -166,16 +168,21 @@
 				ring[i].position.y += velocity[i].y;
 				ring[i].position.z += velocity[i].z;
 
-				//bounce if on boundary:
-				if(Math.abs(ring[i].position.x) > bound){
-					velocity[i].x *= -1;
-				}
-				if(Math.abs(ring[i].position.y) > bound){
-					velocity[i].y *= -1;
-				}
-				if(Math.abs(ring[i].position.z) > bound){
-					velocity[i].z *= -1;
-				}
+				//update velocity:
+				velocity[i].x *= friction;
+				velocity[i].y -= gravity;
+				velocity[i].z *= friction;
+
+				// //bounce if on boundary:
+				// if(Math.abs(ring[i].position.x) > bound){
+				// 	velocity[i].x *= -1;
+				// }
+				// if(Math.abs(ring[i].position.y) > bound){
+				// 	velocity[i].y *= -1;
+				// }
+				// if(Math.abs(ring[i].position.z) > bound){
+				// 	velocity[i].z *= -1;
+				// }
 			}
 
 
