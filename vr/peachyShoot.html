@@ -179,33 +179,37 @@
 
 			t += 1;
 
-			//first row animation
+			//peachy ring position updates!
 			for(i = 0; i < peachNumber; i++ ){
-				//update spin:
-				ring[i].rotation.x = (spin[i].x * t);
-				ring[i].rotation.y = (spin[i].y * t);
-				ring[i].rotation.z = (spin[i].z * t);
 
-				//update position:
-				ring[i].position.x += velocity[i].x;
-				ring[i].position.y += velocity[i].y;
-				ring[i].position.z += velocity[i].z;
+				//only if it's above the floor
+				if(ring[i].position.y > floor.position.y){
+					//update spin:
+					ring[i].rotation.x = (spin[i].x * t);
+					ring[i].rotation.y = (spin[i].y * t);
+					ring[i].rotation.z = (spin[i].z * t);
 
-				//update velocity:
-				velocity[i].x *= friction;
-				velocity[i].y -= gravity;
-				velocity[i].z *= friction;
+					//update position:
+					ring[i].position.x += velocity[i].x;
+					ring[i].position.y += velocity[i].y;
+					ring[i].position.z += velocity[i].z;
 
-				// //bounce if on boundary:
-				// if(Math.abs(ring[i].position.x) > bound){
-				// 	velocity[i].x *= -1;
-				// }
-				// if(Math.abs(ring[i].position.y) > bound){
-				// 	velocity[i].y *= -1;
-				// }
-				// if(Math.abs(ring[i].position.z) > bound){
-				// 	velocity[i].z *= -1;
-				// }
+					//update velocity:
+					velocity[i].x *= friction;
+					velocity[i].y -= gravity;
+					velocity[i].z *= friction;
+
+					// //bounce if on boundary:
+					// if(Math.abs(ring[i].position.x) > bound){
+					// 	velocity[i].x *= -1;
+					// }
+					// if(Math.abs(ring[i].position.y) > bound){
+					// 	velocity[i].y *= -1;
+					// }
+					// if(Math.abs(ring[i].position.z) > bound){
+					// 	velocity[i].z *= -1;
+					// }
+				}
 			}
 
 
