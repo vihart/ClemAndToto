@@ -197,7 +197,7 @@
 					velocity[i].y = 0;
 					velocity[i].z = 0;
 				}else if(ring[i].position.y > collisionFloor){
-					if(velocity[i].y < 0.001){
+					if(velocity[i].y > 0.001){
 					//update spin:
 					ring[i].rotation.x = (spin[i].x * t);
 					ring[i].rotation.y = (spin[i].y * t);
