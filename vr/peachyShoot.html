@@ -94,8 +94,8 @@
 		Floor
 		*/
 		var floorImage = new THREE.ImageUtils.loadTexture( "media/floor2.jpg" );
-		floorImage.wrapS = floorImage.wrapT = THREE.RepeatWrapping;
-		floorImage.repeat.set( 20, 20 );
+		// floorImage.wrapS = floorImage.wrapT = THREE.RepeatWrapping;
+		// floorImage.repeat.set( 20, 20 );
 		var floorGeometry = new THREE.PlaneBufferGeometry( 50, 50, 10 );
 		var floorMaterial = new THREE.MeshPhongMaterial( {map: floorImage, color: 0x0475a1, side: THREE.DoubleSide} );
 		var floor = new THREE.Mesh( floorGeometry, floorMaterial );
@@ -110,6 +110,13 @@
 			);
 		cake.position.set(2,floor.position.y + 0.25, 2);
 		scene.add(cake);
+
+		var cherry = new THREE.Mesh(
+			new THREE.IcosahedronGeometry(0.1),
+			new THREE.MeshPhongMaterial({color: 0xff0000})
+			);
+		cherry.position.set(cake.position.x, cake.position.y + 0.5, cake.position.z);
+		scene.add(cherry);
 
 		//Peachy array
 		var peachy = new THREE.Object3D();
@@ -213,7 +220,9 @@
 
 				}else{ //if it's at or below floor height
 					velocity[i].y = Math.abs(velocity[i].y);
+					velocity[i].x *= floorDampening;
 					velocity[i].y *= floorDampening;
+					velocity[i].z *= floorDampening;
 				}
 					//update position:
 				ring[i].position.x += velocity[i].x;
