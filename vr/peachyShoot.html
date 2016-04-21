@@ -208,6 +208,8 @@
 		        	triggeredController = j;
 		        	triggerPressed = true;
 		        } else if(triggerPressed && triggeredController == j){
+		        	triggerPressed = false;
+		        	triggeredController = -1;
 					ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//position new peachy ring
 					p++;
 		        }
