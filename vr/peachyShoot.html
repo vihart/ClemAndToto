@@ -93,7 +93,7 @@
 		/*
 		Floor
 		*/
-		var floorImage = new THREE.ImageUtils.loadTexture( "media/floor2.png" );
+		var floorImage = new THREE.ImageUtils.loadTexture( "media/floor2.jpg" );
 		floorImage.wrapS = floorImage.wrapT = THREE.RepeatWrapping;
 		floorImage.repeat.set( 20, 20 );
 		var floorGeometry = new THREE.PlaneBufferGeometry( 50, 50, 10 );
@@ -103,9 +103,9 @@
 		floor.position.set(0,-1.5,0);
 		scene.add( floor );
 
-		var cakeTex = new THREE.ImageUtils.loadTexture( "media/cake.png");
+		var cakeTex = new THREE.ImageUtils.loadTexture( "media/cake.jpg");
 		var cake = new THREE.Mesh(
-			new THREE.BoxGeometry(),
+			new THREE.BoxGeometry(1,1,1),
 			new THREE.MeshLambertMaterial({map: cakeTex})
 			);
 		scene.add(cake);
