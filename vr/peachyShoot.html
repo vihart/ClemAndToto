@@ -176,7 +176,8 @@
 
 
     	var triggeredController = [];
-    	var triggerPressed = [];
+    	var triggerPressed = []; // t/f for each controller in array
+    	var heldRing = []; //array for which ring each hand is holding
 
     	var shootScale = 0.1; //for scaling shooting vector
     	var gravity = 0.001;
@@ -264,10 +265,12 @@
 		        	ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
 		        	//
 		        	//put holding-stuff vibration pattern here
+		        	handControl.vibrate(200);
 		        	//
 		        } else if(triggerPressed[j] && triggeredController[j]){
 		        	//
 		        	//put strong shooting vibration here
+		        	handControl.vibrate(200);
 		        	//
 		        	triggerPressed[j] = false;
 		        	triggeredController[j] = false;
