@@ -171,12 +171,12 @@
 
 
 		var hands = {};
-		var vrModeGamePadButtonPressed = false; // because of annoying way gamepad buttons work
-		var pressedController = -1;
+		var vrModeGamePadButtonPressed = []; // because of annoying way gamepad buttons work
+		var pressedController = [];
 
 
-    	var triggeredController = -1;
-    	var triggerPressed = false;
+    	var triggeredController = [];
+    	var triggerPressed = [];
 
     	var shootScale = 0.1; //for scaling shooting vector
     	var gravity = 0.001;
@@ -249,18 +249,18 @@
 				}
 				
 				if (handControl.pose && handControl.buttons[3].pressed) { // enter VR mode
-					pressedController = j;
-					vrModeGamePadButtonPressed = true;
+					pressedController[j] = true;
+					vrModeGamePadButtonPressed[j] = true;
 				} else if (vrModeGamePadButtonPressed && pressedController === j) {
-					vrModeGamePadButtonPressed = false;
-					pressedController = -1;
+					vrModeGamePadButtonPressed[j] = false;
+					pressedController[j] = false;
 					vrMode = !vrMode;
 					effect.setVRMode(vrMode);
 				}
 
 		        if (handControl.pose && handControl.buttons[1].pressed) { //press trigger to ready next peachy ring for shooting
-		        	triggeredController = j;
-		        	triggerPressed = true;
+		        	triggeredController[j] = true;
+		        	triggerPressed[j] = true;
 		        	ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
 		        	//
 		        	//put holding-stuff vibration pattern here
@@ -269,8 +269,8 @@
 		        	//
 		        	//put strong shooting vibration here
 		        	//
-		        	triggerPressed = false;
-		        	triggeredController = -1;
+		        	triggerPressed[j] = false;
+		        	triggeredController[j] = false;
 					//give new ring a new velocity
 					velocity[p%peachNumber] = new THREE.Vector3( //subtract headset pos from hand pos
 						(controls.controllers[j].pose.position[0] - camera.position.x)*shootScale, //x
