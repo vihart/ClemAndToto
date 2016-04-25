@@ -248,7 +248,7 @@
 					hands[j].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);
 				}
 				
-				if (handControl.pose && handControl.buttons[4].pressed) { // enter VR mode
+				if (handControl.pose && handControl.buttons[3].pressed) { // enter VR mode
 					pressedController = j;
 					vrModeGamePadButtonPressed = true;
 				} else if (vrModeGamePadButtonPressed && pressedController === j) {
@@ -258,7 +258,7 @@
 					effect.setVRMode(vrMode);
 				}
 
-		        if (handControl.pose && handControl.buttons[2].pressed) { //draw stuff
+		        if (handControl.pose && handControl.buttons[1].pressed) { //draw stuff
 		        	triggeredController = j;
 		        	triggerPressed = true;
 		        } else if(triggerPressed && triggeredController == j){
