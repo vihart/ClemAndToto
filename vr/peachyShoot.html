@@ -251,7 +251,7 @@
 				if (handControl.pose && handControl.buttons[3].pressed) { // enter VR mode
 					pressedController[j] = true;
 					vrModeGamePadButtonPressed[j] = true;
-				} else if (vrModeGamePadButtonPressed && pressedController === j) {
+				} else if (vrModeGamePadButtonPressed[j] && pressedController[j]) {
 					vrModeGamePadButtonPressed[j] = false;
 					pressedController[j] = false;
 					vrMode = !vrMode;
@@ -265,7 +265,7 @@
 		        	//
 		        	//put holding-stuff vibration pattern here
 		        	//
-		        } else if(triggerPressed && triggeredController == j){
+		        } else if(triggerPressed[j] && triggeredController[j]){
 		        	//
 		        	//put strong shooting vibration here
 		        	//
