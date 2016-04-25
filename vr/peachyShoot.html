@@ -259,29 +259,29 @@
 					effect.setVRMode(vrMode);
 				}
 
-		        if (handControl.pose && handControl.buttons[1].pressed) { //press trigger to ready next peachy ring for shooting
-		        	triggeredController[j] = true;
-		        	triggerPressed[j] = true;
-		        	ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
-		        	//
-		        	//put holding-stuff vibration pattern here
+
+				//shoot peachy ring logic for before, when, during, after pull
+				if (handControl.pose && !handControl.buttons[1].pressed && triggeredController[j] != 1){//before trigger is pulled
+					triggeredController[j] = 0;
+				}else if (handControl.pose && handControl.buttons[1].pressed && triggeredController != 1) { //press trigger to ready next peachy ring for shooting
+		        	triggeredController[j] = 1;
+		        	heldRing[j] = p%peachNumber;
+		        	p++;
+
+		        }else if (handControl.pose && handControl.buttons[1].pressed) {
+		        	ring[heldRing].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
 		        	handControl.vibrate(10);
-		        	//
-		        } else if(handControl.pose && triggerPressed[j] && triggeredController[j]){
-		        	//
-		        	//put strong shooting vibration here
+
+		        } else if(handControl.pose){
+		        	
 		        	handControl.vibrate(10);
-		        	//
-		        	triggerPressed[j] = false;
-		        	triggeredController[j] = false;
 					//give new ring a new velocity
-					velocity[p%peachNumber] = new THREE.Vector3( //subtract headset pos from hand pos
+					velocity[heldRing] = new THREE.Vector3( //subtract headset pos from hand pos
 						(controls.controllers[j].pose.position[0] - camera.position.x)*shootScale, //x
 						(controls.controllers[j].pose.position[1] - camera.position.y)*shootScale, //y
 						(controls.controllers[j].pose.position[2] - camera.position.z)*shootScale //z
 						);
-					ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//position new peachy ring
-					p++;
+		        	triggeredController[j] = -1;
 		        }
 
 				if(debug) {
