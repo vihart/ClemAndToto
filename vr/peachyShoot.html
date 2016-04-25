@@ -265,11 +265,14 @@
 					triggeredController[j] = 0;
 				}else if (handControl.pose && handControl.buttons[1].pressed && triggeredController != 1) { //press trigger to ready next peachy ring for shooting
 		        	triggeredController[j] = 1;
-		        	handControl.vibrate(10);
 		        	heldRing[j] = p%peachNumber;
 		        	p++;
 		        }else if (handControl.pose && handControl.buttons[1].pressed) {
-		        	ring[heldRing[j]].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
+		        	ring[heldRing[j]].position.set(
+		        		handControl.pose.position[0], 
+		        		handControl.pose.position[1], 
+		        		handControl.pose.position[2]);	
+		        		//peachy ring follows hand control
 		        	handControl.vibrate(10);
 		        } else if(handControl.pose){
 		        	
