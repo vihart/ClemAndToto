@@ -265,12 +265,12 @@
 		        	ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
 		        	//
 		        	//put holding-stuff vibration pattern here
-		        	handControl.vibrate(200);
+		        	handControl.vibrate(10);
 		        	//
 		        } else if(handControl.pose && triggerPressed[j] && triggeredController[j]){
 		        	//
 		        	//put strong shooting vibration here
-		        	handControl.vibrate(200);
+		        	handControl.vibrate(10);
 		        	//
 		        	triggerPressed[j] = false;
 		        	triggeredController[j] = false;
