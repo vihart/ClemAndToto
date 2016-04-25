@@ -265,18 +265,17 @@
 					triggeredController[j] = 0;
 				}else if (handControl.pose && handControl.buttons[1].pressed && triggeredController != 1) { //press trigger to ready next peachy ring for shooting
 		        	triggeredController[j] = 1;
+		        	handControl.vibrate(10);
 		        	heldRing[j] = p%peachNumber;
 		        	p++;
-
 		        }else if (handControl.pose && handControl.buttons[1].pressed) {
-		        	ring[heldRing].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
+		        	ring[heldRing[j]].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
 		        	handControl.vibrate(10);
-
 		        } else if(handControl.pose){
 		        	
 		        	handControl.vibrate(10);
 					//give new ring a new velocity
-					velocity[heldRing] = new THREE.Vector3( //subtract headset pos from hand pos
+					velocity[heldRing[j]] = new THREE.Vector3( //subtract headset pos from hand pos
 						(controls.controllers[j].pose.position[0] - camera.position.x)*shootScale, //x
 						(controls.controllers[j].pose.position[1] - camera.position.y)*shootScale, //y
 						(controls.controllers[j].pose.position[2] - camera.position.z)*shootScale //z
