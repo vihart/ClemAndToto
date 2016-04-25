@@ -243,6 +243,7 @@
 				if (!hands[j]) {
 					//create a new hands[j] for each controller
 					hands[j] = new THREE.Mesh(new THREE.OctahedronGeometry(.05), new THREE.MeshBasicMaterial({color: 0xEE0443, wireframe: true}));
+					triggeredController[j] = 0;
 					// scene.add(hands[j]);
 				}
 				if(handControl.pose){
@@ -261,7 +262,7 @@
 
 
 				//shoot peachy ring logic for before, when, during, after pull
-				if (handControl.pose && handControl.buttons[1].pressed == true && triggeredController[j] == 0) { //press trigger to ready next peachy ring for shooting
+				if (handControl.pose && handControl.buttons[1].pressed && triggeredController[j] == 0) { //press trigger to ready next peachy ring for shooting
 		        	triggeredController[j] = 1;
 		        	heldRing[j] = p%peachNumber;
 		        	p++;
