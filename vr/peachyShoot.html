@@ -261,9 +261,7 @@
 
 
 				//shoot peachy ring logic for before, when, during, after pull
-				if (handControl.pose && !handControl.buttons[1].pressed && triggeredController[j] != 1){//before trigger is pulled
-					triggeredController[j] = 0;
-				}else if (handControl.pose && handControl.buttons[1].pressed && triggeredController != 1) { //press trigger to ready next peachy ring for shooting
+				if (handControl.pose && handControl.buttons[1].pressed == true && triggeredController[j] == 0) { //press trigger to ready next peachy ring for shooting
 		        	triggeredController[j] = 1;
 		        	heldRing[j] = p%peachNumber;
 		        	p++;
@@ -271,10 +269,11 @@
 		        	ring[heldRing[j]].position.set(
 		        		handControl.pose.position[0], 
 		        		handControl.pose.position[1], 
-		        		handControl.pose.position[2]);	
+		        		handControl.pose.position[2]
+		        		);	
 		        		//peachy ring follows hand control
 		        	handControl.vibrate(10);
-		        } else if(handControl.pose){
+		        } else if(handControl.pose && triggeredController[j] == 1){
 		        	
 		        	handControl.vibrate(10);
 					//give new ring a new velocity
@@ -283,7 +282,7 @@
 						(controls.controllers[j].pose.position[1] - camera.position.y)*shootScale, //y
 						(controls.controllers[j].pose.position[2] - camera.position.z)*shootScale //z
 						);
-		        	triggeredController[j] = -1;
+		        	triggeredController[j] = 0;
 		        }
 
 				if(debug) {
