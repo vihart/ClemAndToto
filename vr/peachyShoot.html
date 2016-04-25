@@ -258,10 +258,17 @@
 					effect.setVRMode(vrMode);
 				}
 
-		        if (handControl.pose && handControl.buttons[1].pressed) { //draw stuff
+		        if (handControl.pose && handControl.buttons[1].pressed) { //press trigger to ready next peachy ring for shooting
 		        	triggeredController = j;
 		        	triggerPressed = true;
+		        	ring[p%peachNumber].position.set(handControl.pose.position[0], handControl.pose.position[1], handControl.pose.position[2]);	//peachy ring follows hand control
+		        	//
+		        	//put holding-stuff vibration pattern here
+		        	//
 		        } else if(triggerPressed && triggeredController == j){
+		        	//
+		        	//put strong shooting vibration here
+		        	//
 		        	triggerPressed = false;
 		        	triggeredController = -1;
 					//give new ring a new velocity
